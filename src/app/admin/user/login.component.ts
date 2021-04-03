@@ -3,8 +3,9 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 import { Router } from '@angular/router';
 
 import { NzMessageService } from 'ng-zorro-antd/message';
+import {HttpRequestService} from "../../promise/promise";
 
-import {HttpRequestService} from '../../promise/promise';
+
 
 
 @Component({
@@ -39,7 +40,7 @@ export class UserLoginComponent implements OnInit {
 
     ngOnInit() {
       const url = '/api/register';
-      const params = {method: 'post', url, data: {username: 'zhangsan1', password: '!123234234'}};
+      const params = {method: 'post', url, data: {username: 'zhangsan11', password: '!123234234'}};
       this.http.doRequest(params);
     }
 
