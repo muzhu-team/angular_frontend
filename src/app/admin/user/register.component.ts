@@ -110,8 +110,10 @@ export class UserRegisterComponent implements OnInit {
 
         const url = '/api/register';
         // console.log(this.validateForm.controls.email.value);
-        const params = {method: 'post', url, data: {username: this.validateForm.controls.username.value, password: this.validateForm.controls.password.value, email: this.validateForm.controls.email.value, mobile: this.validateForm.controls.mobile.value}};
+        // const params = {method: 'post', url, data: {username: this.validateForm.controls.username.value, password: this.validateForm.controls.password.value, email: this.validateForm.controls.email.value, mobile: this.validateForm.controls.mobile.value}};
+        const params = {method: 'post', url, data: this.validateForm.value};
         console.log(params);
+        // console.log(this.validateForm.value);
         this.http.doRequest(params);
         this.validateForm.reset();
     }
