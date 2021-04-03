@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 import { Router } from '@angular/router';
 
 import { NzMessageService } from 'ng-zorro-antd/message';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
     selector: 'app-user-login',
@@ -16,11 +17,12 @@ export class UserLoginComponent implements OnInit {
     loginError = false;
     selectedIndex = 0;
     mobileLoginError = false;
-
+    private list: any[];
     constructor(
         private fb: FormBuilder,
         private router: Router,
-        private message: NzMessageService
+        private message: NzMessageService,
+        private http: HttpClient,
     ) {
         this.validateForm = this.fb.group({
             username: ['', [Validators.required]],
@@ -29,10 +31,17 @@ export class UserLoginComponent implements OnInit {
             mail: ['', [Validators.required]],
             remember: [true]
         });
+        this.list = [];
     }
 
     ngOnInit() {
-
+      const postCfg = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+      this.http.post('http://localhost:8000/api/register', {username: 'wangning2888', password: '!32445645'}, postCfg)
+        .subscribe(res => { console.log(res, '请求结果'); });
     }
 
     matchMobile = (control: AbstractControl): { [key: string]: boolean } | null => {
