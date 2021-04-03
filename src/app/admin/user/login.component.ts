@@ -3,13 +3,16 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 import { Router } from '@angular/router';
 
 import { NzMessageService } from 'ng-zorro-antd/message';
-import {HttpClient} from '@angular/common/http';
+
+import {HttpRequestService} from '../../promise/promise';
+
 
 @Component({
     selector: 'app-user-login',
     templateUrl: './login.component.html',
     styleUrls: ['./user.component.scss']
 })
+
 
 export class UserLoginComponent implements OnInit {
     validateForm: FormGroup;
@@ -22,7 +25,7 @@ export class UserLoginComponent implements OnInit {
         private fb: FormBuilder,
         private router: Router,
         private message: NzMessageService,
-        private http: HttpClient,
+        private http: HttpRequestService,
     ) {
         this.validateForm = this.fb.group({
             username: ['', [Validators.required]],
@@ -35,13 +38,9 @@ export class UserLoginComponent implements OnInit {
     }
 
     ngOnInit() {
-      const postCfg = {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      };
-      this.http.post('http://localhost:8000/api/register', {username: 'wangning2888', password: '!32445645'}, postCfg)
-        .subscribe(res => { console.log(res, '请求结果'); });
+      const url = '/api/register';
+      const params = {method: 'post', url, data: {username: 'zhangsan1', password: '!123234234'}};
+      this.http.doRequest(params);
     }
 
     matchMobile = (control: AbstractControl): { [key: string]: boolean } | null => {

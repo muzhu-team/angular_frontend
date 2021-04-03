@@ -15,12 +15,15 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzResultModule } from 'ng-zorro-antd/result';
 
-import {HttpClientModule} from '@angular/common/http';
+
 import { UserRoutingModule } from './user-routing.module';
 
 import { UserLoginComponent } from './login.component';
 import { UserRegisterComponent } from './register.component';
 import { UserRegisterResultComponent } from './register-result.component';
+import {HttpRequestService} from '../../promise/promise';
+
+
 
 @NgModule({
     declarations: [
@@ -33,8 +36,8 @@ import { UserRegisterResultComponent } from './register-result.component';
         UserRegisterComponent,
         UserRegisterResultComponent
     ],
+    providers: [HttpRequestService],
     imports: [
-        HttpClientModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
@@ -50,9 +53,10 @@ import { UserRegisterResultComponent } from './register-result.component';
         NzPopoverModule,
         NzProgressModule,
         NzResultModule,
-        UserRoutingModule
+        UserRoutingModule,
     ]
 })
+
 
 export class UserModule {
 
