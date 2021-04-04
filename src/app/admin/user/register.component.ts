@@ -9,6 +9,8 @@ import {HttpRequestService} from '../../promise/promise';
     styleUrls: ['./user.component.scss']
 })
 
+
+
 export class UserRegisterComponent implements OnInit {
     validateForm: FormGroup;
     passwordInfo = {
@@ -20,19 +22,21 @@ export class UserRegisterComponent implements OnInit {
     loginError = false;
     isSpinning = false;
 
+
     constructor(
         private fb: FormBuilder,
         private router: Router,
         private http: HttpRequestService,
     ) {
+
         this.validateForm = this.fb.group({
-            username: ['', [Validators.required]],
-            password: ['', [Validators.required, Validators.minLength(6)]],
+            username: ['', [Validators.required, this.UsernameValidate]],
+            password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15), this.PasswordValidate]],
             checkPassword: ['', [Validators.required, this.confirmationValidator]],
             email: ['', [Validators.required, Validators.email]],
             type: ['86', [Validators.required]],
             mobile: ['', [Validators.required, this.matchMobile]],
-            mail: ['', [Validators.required]],
+            // mail: ['', [Validators.required]],
         });
     }
 
@@ -40,6 +44,32 @@ export class UserRegisterComponent implements OnInit {
 
     }
 
+
+
+    UsernameValidate(nameRe: RegExp){
+      return true;
+    }
+
+    // PasswordValidate(control: AbstractControl) {
+    //   // const regex = new RegExp('[`~!@#$^&*()=|{}\':;\',\\[\\].<>《》/?~！@#￥……&*（）——|{}【】‘；：”“\'。，、？ ]');
+    //   const regex = ['@', '^'];
+    //   for const i in regex{
+    //     if (i in control.value ){
+    //       return { special: true };
+    //       // return true;
+    //     }
+    //   }
+    //   return { special: false };
+    //   // return false;
+    // }
+
+    PasswordValidate(control: AbstractControl) {
+      const re = /.*?[`~!@#$^&*()=\|{}\':;\',\[\].<>《》\/?~！@#￥……&*（）——|\{\}【】‘；：”“\\'。，、？ ]+.*?/g;
+      // console.log(control.value);
+      // console.log(control.value.match(/.*?[`~!@#$^&*()=\|{}\':;\',\[\].<>《》\/?~！@#￥……&*（）——|\{\}【】‘；：”“\\'。，、？ ]+.*?/));
+      console.log((re.test(control.value)) ? {special: true} : {special: false});
+      return (re.test(control.value)) ? {special: true} : {special: false};
+    }
     matchMobile = (control: AbstractControl): { [key: string]: boolean } | null => {
         if (control.value && !control.value.match(/^1(3[0-9]|4[5,7]|5[0,1,2,3,5,6,7,8,9]|6[2,5,6,7]|7[0,1,7,8]|8[0-9]|9[1,8,9])\d{8}$/)) {
             return { matchMobile: true };
@@ -90,18 +120,19 @@ export class UserRegisterComponent implements OnInit {
     }
 
     submitForm() {
-        // this.isSpinning = true;
-        // this.loginError = false;
-        // for (const i in this.validateForm.controls) {
-        //     if (i) {
-        //         this.validateForm.controls[i].markAsDirty();
-        //         this.validateForm.controls[i].updateValueAndValidity();
-        //     }
-        // }
-        // if (this.validateForm.invalid) {
-        //     this.isSpinning = false;
-        //     return;
-        // }
+        this.isSpinning = true;
+        this.loginError = false;
+        for (const i in this.validateForm.controls) {
+            if (i) {
+                this.validateForm.controls[i].markAsDirty();
+                this.validateForm.controls[i].updateValueAndValidity();
+            }
+        }
+        if (this.validateForm.invalid) {
+            // console.log(this.validateForm.invalid);
+            this.isSpinning = false;
+            return;
+        }
         //
         // setTimeout(() => {
         //     sessionStorage.setItem('email', this.validateForm.controls.email.value);
@@ -110,7 +141,6 @@ export class UserRegisterComponent implements OnInit {
 
         const url = '/api/register';
         // console.log(this.validateForm.controls.email.value);
-        // const params = {method: 'post', url, data: {username: this.validateForm.controls.username.value, password: this.validateForm.controls.password.value, email: this.validateForm.controls.email.value, mobile: this.validateForm.controls.mobile.value}};
         const params = {method: 'post', url, data: this.validateForm.value};
         console.log(params);
         // console.log(this.validateForm.value);
