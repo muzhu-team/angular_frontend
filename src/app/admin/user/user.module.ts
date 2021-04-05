@@ -21,7 +21,7 @@ import { UserRoutingModule } from './user-routing.module';
 import { UserLoginComponent } from './login.component';
 import { UserRegisterComponent } from './register.component';
 import { UserRegisterResultComponent } from './register-result.component';
-import {HttpRequestService} from '../../promise/promise';
+import {HttpRequestService} from '../../utils/promise/promise';
 
 
 

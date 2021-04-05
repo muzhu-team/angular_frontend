@@ -3,9 +3,9 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 import { Router } from '@angular/router';
 
 import { NzMessageService } from 'ng-zorro-antd/message';
-import {HttpRequestService} from '../../promise/promise';
-
-
+import {HttpRequestService} from '../../utils/promise/promise';
+import {setter, getter} from '../../utils/storage/storage';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 
 @Component({
@@ -22,6 +22,7 @@ export class UserLoginComponent implements OnInit {
     selectedIndex = 0;
     mobileLoginError = false;
     private list: any[];
+    private response: any;
     constructor(
         private fb: FormBuilder,
         private router: Router,
@@ -31,25 +32,27 @@ export class UserLoginComponent implements OnInit {
         this.validateForm = this.fb.group({
             username: ['', [Validators.required]],
             password: ['', [Validators.required]],
-            mobile: ['', [Validators.required, this.matchMobile]],
-            mail: ['', [Validators.required]],
+            // mobile: ['', [Validators.required, this.matchMobile]],
+            // mail: ['', [Validators.required]],
             remember: [true]
         });
         this.list = [];
+        this.response = {};
     }
 
     ngOnInit() {
-      const url = '/api/register';
-      const params = {method: 'post', url, data: {username: 'zhangsan11', password: '!123234234'}};
-      this.http.doRequest(params);
+      // const url = '/api/register';
+      // const params = {method: 'post', url, data: {username: 'zhangsan11', password: '!123234234'}};
+      // this.http.doRequest(params);
     }
 
-    matchMobile = (control: AbstractControl): { [key: string]: boolean } | null => {
-        if (control.value && !control.value.match(/^1(3[0-9]|4[5,7]|5[0,1,2,3,5,6,7,8,9]|6[2,5,6,7]|7[0,1,7,8]|8[0-9]|9[1,8,9])\d{8}$/)) {
-            return { matchMobile: true };
-        }
-        return null;
-    }
+    // matchMobile = (control: AbstractControl): { [key: string]: boolean } | null => {
+    //     if (control.value && !control.value.match(/^1(3[0-9]|4[5,7]|5[0,1,2,3,5,6,7,8,9]|6[2,5,6,7]|7[0,1,7,8]|8[0-9]|9[1,8,9])\d{8}$/)) {
+    //         return { matchMobile: true };
+    //     }
+    //     return null;
+    // }
+
 
     selectedChange($event) {
         if ($event === 0) {
@@ -65,7 +68,9 @@ export class UserLoginComponent implements OnInit {
         }
     }
 
-    submitForm() {
+    // @ts-ignore
+  // @ts-ignore
+  submitForm() {
         this.isSpinning = true;
         this.loginError = false;
         for (const i of ['username', 'password']) {
@@ -79,17 +84,43 @@ export class UserLoginComponent implements OnInit {
             return;
         }
 
-        setTimeout(() => {
-            const username = this.validateForm.controls.username.value;
-            const password = this.validateForm.controls.password.value;
-            if (['admin', 'user'].indexOf(username) !== -1 && 'ng.antd.admin' === password) {
-                this.router.navigate(['/']);
-                this.message.success('登录成功');
-            } else {
-                this.loginError = true;
-                this.isSpinning = false;
-            }
-        }, 1000);
+        // setTimeout(() => {
+        //     const username = this.validateForm.controls.username.value;
+        //     const password = this.validateForm.controls.password.value;
+        //     if (['admin', 'user'].indexOf(username) !== -1 && 'ng.antd.admin' === password) {
+        //         this.router.navigate(['/']);
+        //         this.message.success('登录成功');
+        //     } else {
+        //         this.loginError = true;
+        //         this.isSpinning = false;
+        //     }
+        // }, 1000);
+        const url = '/api/auth';
+        const formData = new FormData();
+        // formData.append(this.validateForm.value);
+        formData.append('username', this.validateForm.get('username').value);
+        formData.append('password', this.validateForm.get('password').value);
+        const params = {method: 'post', url, data: formData};
+        // const params = {method: 'post', url, data: formData};
+        // const params = {method: 'post', url, data: this.validateForm.value};
+        // console.log(params);
+
+        this.http.doRequest(params).then(res => {
+          this.response = res;
+          if (this.response.code === 200){
+            setter('Token', this.response.data.token);
+            const result = getter('Token');
+            console.log(result, 'result');
+            this.router.navigate(['/']);
+            // 跳轉
+          }else{
+            this.message.create('error', '登錄失敗');
+          }
+          }).catch(err => {
+            this.message.create('error', err.error.msg);
+        });
+                // this.validateForm.reset();
+        // this.router.navigate(['/home']);
     }
 
     submitFormMobile() {

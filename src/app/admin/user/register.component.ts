@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import {HttpRequestService} from '../../promise/promise';
+import {HttpRequestService} from '../../utils/promise/promise';
 
 @Component({
     selector: 'app-user-register',
@@ -31,7 +31,7 @@ export class UserRegisterComponent implements OnInit {
 
         this.validateForm = this.fb.group({
             username: ['', [Validators.required, this.UsernameValidate]],
-            password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15), this.PasswordValidate]],
+            password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30), this.PasswordValidate]],
             checkPassword: ['', [Validators.required, this.confirmationValidator]],
             email: ['', [Validators.required, Validators.email]],
             type: ['86', [Validators.required]],
@@ -63,12 +63,13 @@ export class UserRegisterComponent implements OnInit {
     //   // return false;
     // }
 
-    PasswordValidate(control: AbstractControl) {
+    PasswordValidate = (control: AbstractControl): { [key: string]: boolean } | null => {
       const re = /.*?[`~!@#$^&*()=\|{}\':;\',\[\].<>《》\/?~！@#￥……&*（）——|\{\}【】‘；：”“\\'。，、？ ]+.*?/g;
       // console.log(control.value);
-      // console.log(control.value.match(/.*?[`~!@#$^&*()=\|{}\':;\',\[\].<>《》\/?~！@#￥……&*（）——|\{\}【】‘；：”“\\'。，、？ ]+.*?/));
-      console.log((re.test(control.value)) ? {special: true} : {special: false});
-      return (re.test(control.value)) ? {special: true} : {special: false};
+      // console.log((re.test(control.value)) ? null : {special: true});
+      // return (re.test(control.value)) ? {special: true} : {special: false};
+      // console.log((re.test(control.value)), 'form message');
+      return (re.test(control.value)) ? null : {special: true};
     }
     matchMobile = (control: AbstractControl): { [key: string]: boolean } | null => {
         if (control.value && !control.value.match(/^1(3[0-9]|4[5,7]|5[0,1,2,3,5,6,7,8,9]|6[2,5,6,7]|7[0,1,7,8]|8[0-9]|9[1,8,9])\d{8}$/)) {
@@ -142,7 +143,7 @@ export class UserRegisterComponent implements OnInit {
         const url = '/api/register';
         // console.log(this.validateForm.controls.email.value);
         const params = {method: 'post', url, data: this.validateForm.value};
-        console.log(params);
+        // console.log(params);
         // console.log(this.validateForm.value);
         this.http.doRequest(params);
         this.validateForm.reset();

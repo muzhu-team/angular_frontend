@@ -14,6 +14,7 @@ export class HttpRequestService {
   }
 
   public async doRequest(params: any) {
+    console.log(params, 'params');
     if (params.url === '' || params.url === undefined) {
       throw (new Error('request url is missing'));
     }
