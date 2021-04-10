@@ -7,7 +7,7 @@
     [style]="isCollapsed ? 'width: 80px; flex: 0 0 80px; max-width: 80px; min-width: 80px;' : 'width: 208px; flex: 0 0 208px; max-width: 208px; min-width: 208px;'">
     <div class="logo" [ngClass]="{'sider-collapsed': isCollapsed}" *ngIf="drawerInfo.content.menuHeader">
       <img src="./assets/images/logo.svg" alt="">
-      <h1 *ngIf="!isCollapsed">Ng Antd Admin</h1>
+      <h1 *ngIf="!isCollapsed">Admin</h1>
     </div>
     <ul nz-menu class="left-menu" [nzTheme]="siteStyle == 'menu' ? 'light' : 'dark'" nzMode="inline"
       [nzInlineCollapsed]="isCollapsed">

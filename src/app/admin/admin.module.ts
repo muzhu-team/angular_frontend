@@ -21,6 +21,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzGridModule } from 'ng-zorro-antd/grid';
 
 import { AuthGuard } from './../service/auth-guard.service';
 import { CommonService } from './../service/common.service';
@@ -31,13 +32,16 @@ import { AdminComponent } from './admin.component';
 import { HomeComponent } from './home/home.component';
 import { ChangelogComponent } from './changelog/changelog.component';
 import { DeviceComponent } from './device/device/device.component';
+import { SensorComponent } from './device/sensor/sensor.component';
+
 
 @NgModule({
     declarations: [
         AdminComponent,
         HomeComponent,
         ChangelogComponent,
-        DeviceComponent
+        DeviceComponent,
+        SensorComponent
     ],
     exports: [
         AdminComponent,
@@ -51,6 +55,7 @@ import { DeviceComponent } from './device/device/device.component';
         NzMenuModule,
         NzIconModule,
         NzCardModule,
+        NzGridModule,
         NzTimelineModule,
         NzInputModule,
         NzAutocompleteModule,

@@ -31,6 +31,7 @@ const adminRoutes: Routes = [
             {
               path: 'device',
               component: DeviceComponent,
+              data: { title: '设备管理' }
             },
             {
                 path: 'dashboard',

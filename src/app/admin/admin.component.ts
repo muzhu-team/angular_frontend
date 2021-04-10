@@ -89,9 +89,14 @@ export class AdminComponent implements OnInit, AfterViewInit {
 
         this.menuList = [
             {
-                title: 'Home',
-                icon: 'home',
-                link: '/home',
+              title: 'Home',
+              icon: 'home',
+              link: '/home',
+            },
+            {
+              title: '设备管理',
+              icon: 'cluster',
+              link: '/device',
             },
             {
                 title: 'Dashboard',
