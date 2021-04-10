@@ -33,6 +33,7 @@ import { HomeComponent } from './home/home.component';
 import { ChangelogComponent } from './changelog/changelog.component';
 import { DeviceComponent } from './device/device/device.component';
 import { SensorComponent } from './device/sensor/sensor.component';
+import {HttpRequestService} from '../utils/promise/promise';
 
 
 @NgModule({
@@ -75,7 +76,8 @@ import { SensorComponent } from './device/sensor/sensor.component';
     ],
     providers: [
         AuthGuard,
-        CommonService
+        CommonService,
+        HttpRequestService
     ]
 })
 

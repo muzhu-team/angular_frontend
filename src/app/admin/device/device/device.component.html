@@ -1,60 +1,15 @@
 <div>
   <nz-row>
-    <nz-col>
-      <nz-card class="card" nzTitle="设备名 : 设备ID">
-          <p>购置日期</p>
-          <p>制造商</p>
-          <p>数量</p>
-          <p>人员</p>
-      </nz-card>
-    </nz-col>
-    <nz-col>
-      <nz-card class="card" nzTitle="设备名 : 设备ID">
-        <p>购置日期</p>
-        <p>制造商</p>
-        <p>数量</p>
-        <p>人员</p>
-      </nz-card>
-    </nz-col>
-    <nz-col>
-      <nz-card class="card" nzTitle="设备名 : 设备ID">
-        <p>购置日期</p>
-        <p>制造商</p>
-        <p>数量</p>
-        <p>人员</p>
-      </nz-card>
-    </nz-col>
-    <nz-col>
-      <nz-card class="card" nzTitle="设备名 : 设备ID">
-        <p>购置日期</p>
-        <p>制造商</p>
-        <p>数量</p>
-        <p>人员</p>
-      </nz-card>
-    </nz-col>
-    <nz-col>
-      <nz-card class="card" nzTitle="设备名 : 设备ID">
-        <p>购置日期</p>
-        <p>制造商</p>
-        <p>数量</p>
-        <p>人员</p>
-      </nz-card>
-    </nz-col>
-    <nz-col>
-      <nz-card class="card" nzTitle="设备名 : 设备ID">
-        <p>购置日期</p>
-        <p>制造商</p>
-        <p>数量</p>
-        <p>人员</p>
-      </nz-card>
-    </nz-col>
-    <nz-col>
-      <nz-card class="card" nzTitle="设备名 : 设备ID">
-        <p>购置日期</p>
-        <p>制造商</p>
-        <p>数量</p>
-        <p>人员</p>
+    <nz-col class="card_col" *ngFor="let Device of Devices;index as i;">
+      <nz-card [nzLoading]="LoadingBoolean" [nzBodyStyle]="{'background-color': '#D2E9FF'} " class="card" bordered={false} nzTitle="{{Device.name}} : {{Device.id}}">
+          <p>购置日期 : {{Device.purchase_date}}</p>
+          <p>制造商 : {{Device.manufacturer}}</p>
+          <p>数量 : {{Device.status_num}}</p>
+          <p>人员 : {{Device.user_id}}</p>
       </nz-card>
     </nz-col>
   </nz-row>
 </div>
+
+
+<!--&lt;!&ndash;{{Devices}}&ndash;&gt;-->

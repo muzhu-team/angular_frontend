@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpRequestService} from '../../../utils/promise/promise';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-device',
@@ -8,9 +10,23 @@ import { Component, OnInit } from '@angular/core';
 export class DeviceComponent implements OnInit {
 
   public Devices: Array<Device> = [];
-  constructor() { }
+  public DevicesInfo: object;
+  public LoadingBoolean: boolean;
+  constructor(private http: HttpClient) {
+  }
 
   ngOnInit(): void {
+    this.LoadingBoolean = true;
+    const url = '/api/device';
+    this.http.get(url).subscribe(data => {
+      if (typeof data === 'object'){
+        this.DevicesInfo = data;
+        // @ts-ignore
+        this.Devices = this.DevicesInfo.data;
+        this.LoadingBoolean = false;
+      }
+      // console.log(data);
+    });
   }
 
 }

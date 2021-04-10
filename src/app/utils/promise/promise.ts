@@ -54,7 +54,6 @@ export class HttpRequestService {
     if (params.response !== undefined) {
       requestOption.responseType = params.response;
     }
-
     return await this.http.get(url, requestOption).toPromise();
   }
 
