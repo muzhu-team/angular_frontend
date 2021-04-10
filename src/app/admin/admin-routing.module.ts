@@ -5,6 +5,7 @@ import { AuthGuard } from './../service/auth-guard.service';
 
 import { AdminComponent } from './admin.component';
 import { HomeComponent } from './home/home.component';
+import { DeviceComponent } from './device/device/device.component';
 import { ChangelogComponent } from './changelog/changelog.component';
 
 const adminRoutes: Routes = [
@@ -26,6 +27,10 @@ const adminRoutes: Routes = [
                 path: 'changelog',
                 component: ChangelogComponent,
                 data: { title: '更新日志' }
+            },
+            {
+              path: 'device',
+              component: DeviceComponent,
             },
             {
                 path: 'dashboard',

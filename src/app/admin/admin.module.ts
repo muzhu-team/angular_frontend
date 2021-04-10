@@ -30,12 +30,14 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { HomeComponent } from './home/home.component';
 import { ChangelogComponent } from './changelog/changelog.component';
+import { DeviceComponent } from './device/device/device.component';
 
 @NgModule({
     declarations: [
         AdminComponent,
         HomeComponent,
-        ChangelogComponent
+        ChangelogComponent,
+        DeviceComponent
     ],
     exports: [
         AdminComponent,
